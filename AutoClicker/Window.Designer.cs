@@ -321,7 +321,7 @@
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
 			this.MaximumSize = new System.Drawing.Size(470, 160);
-			this.MinimumSize = new System.Drawing.Size(470, 160);
+			this.MinimumSize = new System.Drawing.Size(250, 160);
 			this.Name = "Window";
 			this.ShowIcon = false;
 			this.Text = "Autoclicker";
