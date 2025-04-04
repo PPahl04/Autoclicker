@@ -63,11 +63,11 @@
 			this.btnStartStop.AutoSize = true;
 			this.btnStartStop.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.btnStartStop.Font = new System.Drawing.Font("Bahnschrift", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnStartStop.Location = new System.Drawing.Point(43, 4);
+			this.btnStartStop.Location = new System.Drawing.Point(40, 4);
 			this.btnStartStop.Name = "btnStartStop";
 			this.btnStartStop.Size = new System.Drawing.Size(140, 30);
 			this.btnStartStop.TabIndex = 0;
-			this.btnStartStop.Text = "Start Auto Click";
+			this.btnStartStop.Text = "Start Autoclicker";
 			this.btnStartStop.UseVisualStyleBackColor = true;
 			this.btnStartStop.Click += new System.EventHandler(this.btnStartStop_Click);
 			// 
@@ -76,7 +76,7 @@
 			this.lblInterval.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.lblInterval.AutoSize = true;
 			this.lblInterval.Font = new System.Drawing.Font("Bahnschrift", 11F);
-			this.lblInterval.Location = new System.Drawing.Point(16, 25);
+			this.lblInterval.Location = new System.Drawing.Point(10, 27);
 			this.lblInterval.Name = "lblInterval";
 			this.lblInterval.Size = new System.Drawing.Size(97, 18);
 			this.lblInterval.TabIndex = 1;
@@ -91,7 +91,7 @@
 			this.nudInterval.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.nudInterval.AutoSize = true;
 			this.nudInterval.Font = new System.Drawing.Font("Bahnschrift", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.nudInterval.Location = new System.Drawing.Point(115, 23);
+			this.nudInterval.Location = new System.Drawing.Point(105, 23);
 			this.nudInterval.Maximum = new decimal(new int[] {
             2400000,
             0,
@@ -124,7 +124,7 @@
 			this.lblHint.AutoSize = true;
 			this.lblHint.Font = new System.Drawing.Font("Bahnschrift", 11F);
 			this.lblHint.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-			this.lblHint.Location = new System.Drawing.Point(4, 37);
+			this.lblHint.Location = new System.Drawing.Point(6, 37);
 			this.lblHint.Name = "lblHint";
 			this.lblHint.Size = new System.Drawing.Size(209, 18);
 			this.lblHint.TabIndex = 3;
@@ -145,11 +145,11 @@
 			this.lblUserTimeFrame.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.lblUserTimeFrame.AutoSize = true;
 			this.lblUserTimeFrame.Font = new System.Drawing.Font("Bahnschrift", 11F);
-			this.lblUserTimeFrame.Location = new System.Drawing.Point(16, 3);
+			this.lblUserTimeFrame.Location = new System.Drawing.Point(10, 5);
 			this.lblUserTimeFrame.Name = "lblUserTimeFrame";
-			this.lblUserTimeFrame.Size = new System.Drawing.Size(176, 18);
+			this.lblUserTimeFrame.Size = new System.Drawing.Size(173, 18);
 			this.lblUserTimeFrame.TabIndex = 3;
-			this.lblUserTimeFrame.Text = "User-defined time frame:";
+			this.lblUserTimeFrame.Text = "User-defined time frame";
 			// 
 			// btn30sec
 			// 
@@ -198,7 +198,7 @@
 			this.lblCalculate.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.lblCalculate.AutoSize = true;
 			this.lblCalculate.Font = new System.Drawing.Font("Bahnschrift", 11.25F);
-			this.lblCalculate.Location = new System.Drawing.Point(11, 36);
+			this.lblCalculate.Location = new System.Drawing.Point(10, 38);
 			this.lblCalculate.Name = "lblCalculate";
 			this.lblCalculate.Size = new System.Drawing.Size(64, 18);
 			this.lblCalculate.TabIndex = 3;
@@ -224,7 +224,7 @@
 			this.nudInputTime.TabIndex = 3;
 			this.nudInputTime.Tag = "calculate";
 			this.nudInputTime.Value = new decimal(new int[] {
-            2400,
+            10,
             0,
             0,
             0});
@@ -238,22 +238,22 @@
 			this.cbTimeUnit.Items.AddRange(new object[] {
             "minute(s)",
             "second(s)"});
-			this.cbTimeUnit.Location = new System.Drawing.Point(81, 4);
+			this.cbTimeUnit.Location = new System.Drawing.Point(81, 3);
 			this.cbTimeUnit.Name = "cbTimeUnit";
 			this.cbTimeUnit.Size = new System.Drawing.Size(136, 26);
 			this.cbTimeUnit.TabIndex = 8;
-			this.cbTimeUnit.DropDownClosed += new System.EventHandler(this.cbTimes_DropDownClosed);
+			this.cbTimeUnit.SelectedIndexChanged += new System.EventHandler(this.cbTimes_ValueChanged);
 			// 
 			// lblStandardTimeFrame
 			// 
 			this.lblStandardTimeFrame.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.lblStandardTimeFrame.AutoSize = true;
 			this.lblStandardTimeFrame.Font = new System.Drawing.Font("Bahnschrift", 11F);
-			this.lblStandardTimeFrame.Location = new System.Drawing.Point(14, 2);
+			this.lblStandardTimeFrame.Location = new System.Drawing.Point(10, 2);
 			this.lblStandardTimeFrame.Name = "lblStandardTimeFrame";
-			this.lblStandardTimeFrame.Size = new System.Drawing.Size(149, 18);
+			this.lblStandardTimeFrame.Size = new System.Drawing.Size(142, 18);
 			this.lblStandardTimeFrame.TabIndex = 9;
-			this.lblStandardTimeFrame.Text = "Standard time frame:";
+			this.lblStandardTimeFrame.Text = "Default time frames";
 			// 
 			// pnlTimeCalculator
 			// 
@@ -269,7 +269,7 @@
 			// tbCalcResult
 			// 
 			this.tbCalcResult.Font = new System.Drawing.Font("Bahnschrift", 11.25F);
-			this.tbCalcResult.Location = new System.Drawing.Point(81, 33);
+			this.tbCalcResult.Location = new System.Drawing.Point(81, 29);
 			this.tbCalcResult.Name = "tbCalcResult";
 			this.tbCalcResult.ReadOnly = true;
 			this.tbCalcResult.Size = new System.Drawing.Size(136, 26);
@@ -302,7 +302,7 @@
 			this.btnChangeWindowState.Font = new System.Drawing.Font("Bahnschrift", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnChangeWindowState.Location = new System.Drawing.Point(436, 0);
 			this.btnChangeWindowState.Name = "btnChangeWindowState";
-			this.btnChangeWindowState.Size = new System.Drawing.Size(18, 119);
+			this.btnChangeWindowState.Size = new System.Drawing.Size(18, 121);
 			this.btnChangeWindowState.TabIndex = 10;
 			this.btnChangeWindowState.Text = "<<";
 			this.btnChangeWindowState.UseVisualStyleBackColor = true;
@@ -312,7 +312,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(454, 119);
+			this.ClientSize = new System.Drawing.Size(454, 121);
 			this.Controls.Add(this.btnChangeWindowState);
 			this.Controls.Add(this.pnlStandardTimeFrame);
 			this.Controls.Add(this.pnlInteractClicker);
@@ -320,10 +320,11 @@
 			this.Controls.Add(this.pnlUserTimeFrame);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.MaximizeBox = false;
-			this.MinimumSize = new System.Drawing.Size(16, 39);
+			this.MaximumSize = new System.Drawing.Size(470, 160);
+			this.MinimumSize = new System.Drawing.Size(470, 160);
 			this.Name = "Window";
 			this.ShowIcon = false;
-			this.Text = "Auto Clicker";
+			this.Text = "Autoclicker";
 			this.Load += new System.EventHandler(this.Window_Load);
 			((System.ComponentModel.ISupportInitialize)(this.nudInterval)).EndInit();
 			this.pnlUserTimeFrame.ResumeLayout(false);

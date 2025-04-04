@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Input;
 
@@ -14,63 +14,37 @@ namespace AutoClicker
 		
 		bool _clickerIsActive;
 		int _intervalToUse;
-		State _windowState = State.HideExtended;
-		Key _startStopKey = Key.RightShift;
+		State _windowState;
+		Key _startStopKey;
+		Button[] _timeFrames;
 
 		public Window()
 		{
 			InitializeComponent();
+
+			_startStopKey = Key.RightShift;
+			_windowState = State.HideExtended;
+			_timeFrames = new Button[3] 
+			{
+				btn30sec,
+				btn1min, 
+				btn5min
+			};
 		}
 
-		private enum MouseEventsFlags
+		enum MouseEventsFlags
 		{
 			LeftDown = 2,
 			LeftUp = 4,
 		}
 
-		private void LeftClick(Point p)
+		enum State
 		{
-			mouse_event((int)MouseEventsFlags.LeftDown, p.X, p.Y, 0, 0);
-			mouse_event((int)MouseEventsFlags.LeftUp, p.X, p.Y, 0, 0);
+			HideExtended,
+			ShowExtended
 		}
-
-		private void btnStartStop_Click(object sender, EventArgs e)
-		{
-			ChangeActiveState();
-		}
-
-		private void ChangeActiveState()
-		{
-			_clickerIsActive = !_clickerIsActive;
-			tmrClicker.Interval = _intervalToUse;
-			tmrClicker.Enabled = true;
-
-			if (_clickerIsActive)
-			{
-				btnStartStop.Text = "Stop Auto Click";
-				tmrClicker.Start();
-			}
-			else
-			{
-				btnStartStop.Text = "Start Auto CLick";
-				tmrClicker.Stop();
-			}
-		}
-
-		private void timer_Tick(object sender, EventArgs e)
-		{
-			LeftClick(new Point(MousePosition.X, MousePosition.Y));
-		}
-
-		private void tmrKeyDown_Tick(object sender, EventArgs e)
-		{
-			if (Keyboard.IsKeyDown(_startStopKey))
-			{
-				ChangeActiveState();
-			}
-		}
-
-		private void Window_Load(object sender, EventArgs e)
+		
+		void Window_Load(object sender, EventArgs e)
 		{
 			tmrKeyDown.Start();
 			_intervalToUse = (int)nudInterval.Value;
@@ -78,98 +52,151 @@ namespace AutoClicker
 			ChangeWindow();
 		}
 
-		private void btnStandardTimeFrame_Click(object sender, EventArgs e)
+		void LeftClick(Point p)
 		{
-			Button senderButton = (Button)sender;
-			Regex rgxLetters = new Regex(@"[a-z]+");
-			Regex rgxDigits = new Regex(@"\d+");
+			mouse_event((int)MouseEventsFlags.LeftDown, p.X, p.Y, 0, 0);
+			mouse_event((int)MouseEventsFlags.LeftUp, p.X, p.Y, 0, 0);
+		}
 
-			string timeUnit = rgxLetters.Match(senderButton.Text).Value;
-			int timeFrame = Convert.ToInt32(rgxDigits.Match(senderButton.Text).Value);
+		void btnStartStop_Click(object sender, EventArgs e)
+		{
+			ChangeActiveState();
+		}
 
-			timeUnit = DetermineNextTimeUnit(timeUnit);
-			_intervalToUse = (int)CalculateToMilliSeconds(timeFrame, timeUnit);
+		/// <summary>
+		/// Will start/stop the timer based on if the clicker is active or not.
+		/// </summary>
+		void ChangeActiveState()
+		{
+			_clickerIsActive = !_clickerIsActive;
+			tmrClicker.Interval = _intervalToUse;
+			tmrClicker.Enabled = true;
 
-			switch (timeFrame)
+			if (_clickerIsActive)
 			{
-				case 30:
-					btn30sec.Enabled = false;
-					btn1min.Enabled = true;
-					btn5min.Enabled = true;
-					break;
-				
-				case 1:
-					btn30sec.Enabled = true;
-					btn1min.Enabled = false;
-					btn5min.Enabled = true;
-				break;
-				
-				case 5:
-					btn30sec.Enabled = true;
-					btn1min.Enabled = true;
-					btn5min.Enabled = false;
-				break;
+				btnStartStop.Text = "Stop Autoclicker";
+				tmrClicker.Start();
+			}
+			else
+			{
+				btnStartStop.Text = "Start Autoclicker";
+				tmrClicker.Stop();
 			}
 		}
 
+		/// <summary>
+		/// Event that will trigger the click method if raised.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void timer_Tick(object sender, EventArgs e)
+		{
+			LeftClick(new Point(MousePosition.X, MousePosition.Y));
+		}
+		
+		/// <summary>
+		/// Will check if the user has pressed the start/stop key during runtime
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void tmrKeyDown_Tick(object sender, EventArgs e)
+		{
+			if (Keyboard.IsKeyDown(_startStopKey))
+			{
+				ChangeActiveState();
+			}
+		}
+
+		/// <summary>
+		/// Will set up the timers interval to the desired buttons data
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void btnStandardTimeFrame_Click(object sender, EventArgs e)
+		{
+			Button senderButton = (Button)sender;
+			string[] btnData = senderButton.Text.Split();
+
+			int timeFrame = Convert.ToInt32(btnData[0]);
+			string timeUnit = btnData[1];
+
+			timeUnit = DetermineNextTimeUnit(timeUnit);
+			_intervalToUse = CalculateToMilliSeconds(timeFrame, timeUnit);
+
+			senderButton.Enabled = false;
+			Button[] uninteractedBtns = _timeFrames.Where(btn => btn != senderButton).ToArray();
+			foreach(Button btn in uninteractedBtns)
+			{
+				btn.Enabled = true;
+			}
+		}
+
+		/// <summary>
+		/// Returns the time frame the selected time frame needs to be converted to.
+		/// </summary>
+		/// <param name="timeUnit"></param>
+		/// <returns></returns>
 		string DetermineNextTimeUnit(string timeUnit)
 		{
 			switch(timeUnit)
 			{
 				case "minute(s)":
 				case "min":
-					timeUnit = "Second";
+					timeUnit = "sec";
 				break;
 			
 				case "second(s)":
 				case "sec":
-					timeUnit = "Millisecond";
+					timeUnit = "ms";
 				break;
 			}
 
 			return timeUnit;
 		}
 
-		int CalculateToMilliSeconds(int timeFrame, string nextTimeUnit)
+		int CalculateToMilliSeconds(int myTimeFrame, string myNextTimeUnit)
 		{
-			if (nextTimeUnit.Equals("Minute"))
+			// convert min to sec
+			if (myNextTimeUnit.Equals("sec"))
 			{
-				timeFrame *= 60;
-				nextTimeUnit = "Second";
+				myTimeFrame *= 60;
+				myNextTimeUnit = "ms";
 			}
 
-			if (nextTimeUnit.Equals("Second"))
+			// convert sec to ms
+			if (myNextTimeUnit.Equals("ms"))
 			{
-				timeFrame *= 60;
-				nextTimeUnit = "Millisecond";
+				myTimeFrame *= 1000;
 			}
 
-			if (nextTimeUnit.Equals("Millisecond"))
-			{
-				timeFrame *= 1000;
-			}
-
-			return timeFrame;
+			return myTimeFrame;
 		}
 
-		private void cbTimes_DropDownClosed(object sender, EventArgs e)
+		void cbTimes_ValueChanged(object sender, EventArgs e)
 		{
 			CalculateResult();
 		}
 
-		private void nudInput_ValueChanged(object sender, EventArgs e)
+		/// <summary>
+		/// Event that handles the nuds whose value have changed
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		void nudInput_ValueChanged(object sender, EventArgs e)
 		{
 			NumericUpDown nudSender = (NumericUpDown)sender;
-			if (nudSender.Tag.Equals(nudInputTime.Tag))
+			if (nudSender == nudInputTime)
 			{
 				CalculateResult();
 			}
-			else if (nudSender.Tag.Equals(nudInterval.Tag))
+			else if (nudSender == nudInterval)
 			{
 				_intervalToUse = (int)nudSender.Value;
-				btn30sec.Enabled = true;
-				btn1min.Enabled = true;
-				btn5min.Enabled = true;
+				
+				foreach (Button btn in _timeFrames)
+				{
+					btn.Enabled = true;
+				}
 
 				if (_clickerIsActive)
 				{
@@ -186,32 +213,29 @@ namespace AutoClicker
 			tbCalcResult.Text = result > 0 ? result.ToString() : "ERROR" ;
 		}
 
-		enum State
+		void btnChangeWindowState_Click(object sender, EventArgs e)
 		{
-			HideExtended,
-			ShowExtended
-		}
-
-		private void btnChangeWindowState_Click(object sender, EventArgs e)
-		{
-			_windowState = (int)_windowState == 0 ? State.ShowExtended : State.HideExtended;
+			_windowState = _windowState == State.HideExtended ? State.ShowExtended : State.HideExtended;
 			ChangeWindow();
 		}
 
+		/// <summary>
+		/// This will either widen the window to show its other options or reduce it to show its main functions.
+		/// </summary>
 		void ChangeWindow()
 		{
 			if (_windowState == State.HideExtended)
 			{
-				this.Width = pnlInteractClicker.Width + btnChangeWindowState.Width * 2;
+				Width = pnlInteractClicker.Width + btnChangeWindowState.Width * 2;
 				pnlStandardTimeFrame.Visible = false;
 				pnlTimeCalculator.Visible = false;
 				btnChangeWindowState.Text = ">>";
 			}
-			else
+			else if (_windowState == State.ShowExtended)
 			{
 				pnlStandardTimeFrame.Visible = true;
 				pnlTimeCalculator.Visible = true;
-				this.Width = 470;
+				Width = 470;
 				btnChangeWindowState.Text = "<<";
 			}
 		}
