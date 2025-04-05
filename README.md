@@ -1,60 +1,10 @@
 # Autoclicker
 
-## Description
+Dies ist eine kleine Anwendung, die ich entwickelt habe mit einen [Tutorial](https://youtu.be/tKDNFzJgcrU?si=wvqpE6fMYh2w_hp7).
 
-Dies ist eine kleine Anwendung, die ich entwickelt habe mit dem Tutorial: https://youtu.be/tKDNFzJgcrU?si=wvqpE6fMYh2w_hp7. Es ist ein Autoclicker, welches ich erweitert habe, damit man benutzerdefinierte Zeiten für die Klickzeit in Milisekunden angeben kann. Dazu gibt es einen Konverter, welches Minuten und Sekunden zu Milisekunden umwandeln lässt. 
+Es ist ein Autoclicker, welches ich mit benutzer- und vordefinierte Zeiten erweitert habe. Die benutzerdefinierten Zeiten muss man in Millisekunden angeben. Als Hilfe dafür gibt es einen Konverter, welches Minuten und Sekunden zu Millisekunden umrechnet.
+Es gibt drei vordefinierte Zeiten, die zur Auswahl bereitgestellt sind.
 
-## Getting Started
+Die ausgewählte Klickzeit, benutzer- oder vordefiniert, wird für den Autoclicker verwendet.
 
-### Dependencies
-
-* Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-* ex. Windows 10
-
-### Installing
-
-* How/where to download your program
-* Any modifications needed to be made to files/folders
-
-### Executing program
-
-* How to run the program
-* Step-by-step bullets
-```
-code blocks for commands
-```
-
-## Help
-
-Any advise for common problems or issues.
-```
-command to run if program contains helper info
-```
-
-## Authors
-
-Contributors names and contact info
-
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
-
-## Version History
-
-* 0.2
-    * Various bug fixes and optimizations
-    * See [commit change]() or See [release history]()
-* 0.1
-    * Initial Release
-
-## License
-
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
-
-## Acknowledgments
-
-Inspiration, code snippets, etc.
-* [awesome-readme](https://github.com/matiassingers/awesome-readme)
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* [dbader](https://github.com/dbader/readme-template)
-* [zenorocha](https://gist.github.com/zenorocha/4526327)
-* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
+Diese Anwendung wurde in Visual Studio mit .Net und C# entwickelt.
