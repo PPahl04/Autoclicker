@@ -40,4 +40,4 @@ Es gibt drei vordefinierte Zeiten, die zur Auswahl bereitgestellt sind. Nach der
 2. Anwendung starten
     ```bash
     dotnet build
-    dotnet run
+    AutoClicker\bin\Debug\AutoClicker.exe
